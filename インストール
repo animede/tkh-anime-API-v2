@@ -1,0 +1,53 @@
+#以下でCUDA確認
+nvcc -V　
+nvcc: NVIDIA (R) Cuda compiler driver
+Copyright (c) 2005-2023 NVIDIA Corporation
+Built on Wed_Nov_22_10:17:15_PST_2023
+Cuda compilation tools, release 12.3, V12.3.107
+Build cuda_12.3.r12.3/compiler.33567101_0
+
+
+
+リポジトリをクローン
+git clone https://github.com/pkhungurn/tkh-anime-API-v2.git
+
+仮想環境作成
+python3 -m venv tkh
+source tkh/bin/activate
+cd tkh-anime-API-v2
+
+ pip install -r requirements.txt
+ 
+
+インストール
+pip install requirements.txt
+
+モデルダウンロード
+HuggingFaceの以下のモデルからダウンロード
+https://huggingface.co/UZUKI/Scalable-tkh
+
+isnetis.ckp
+realesr-animevideov3.pth
+ssd_best8.pth
+talking-head-anime-3-models.zip
+
+コマンドからだと
+wget https://www.dropbox.com/s/y7b8jl4n2euv8xe/talking-head-anime-3-models.zip?dl=0
+または、ダウンロードボタン
+data/models/ にtalking-head-anime-3-models.zip?dl=0
+または
+talking-head-anime-3-models.zipをコピーして展開
+
+作成されたホルダー名をmodelsに変更
+
+以下のモデルダウンロド
+①AnimeFaceDetection
+②real-ESRGAN
+のウエイトをダウンロード
+ssd_best8.pthをweightsホルダへコピー
+realesr-animevideov3.pthをweightsホルダへコピー
+isnetis.ckptはtkh-anime-API-v2のルート（このファイルがあるディレクトリ）へコピー
+
+
+
+

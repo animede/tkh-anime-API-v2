@@ -1,0 +1,308 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 40px;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+h1 {
+    color: #00ffff;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* コンテナのスタイル設定 */
+.image-container {
+    display: flex;
+    flex-wrap: wrap; /* 小さい画面で縦並びになる */
+    justify-content: center; /* 画像を中央寄せ */
+    gap: 20px; /* 画像間のスペース */
+    max-width: 100%; /* 親要素に合わせる */
+    margin: 0 auto; /* コンテナを中央寄せ */
+}
+
+/* 画像のレスポンシブスタイル */
+.image-container img {
+    width: 100%; /* 親要素の幅に合わせて表示 */
+    height: auto; /* 高さはアスペクト比に合わせる */
+    max-width: 400px; /* 最大幅を設定（例: 400px） */
+    object-fit: contain; /* アスペクト比を維持してコンテナ内に収まる */
+    box-sizing: border-box; /* パディングやボーダーも幅に含める */
+}
+
+/* メディアクエリでレスポンシブ対応 */
+@media (max-width: 768px) {
+    .image-container img {
+        max-width: 300px; /* タブレットサイズでの最大幅 */
+    }
+}
+
+@media (max-width: 480px) {
+    .image-container {
+        flex-direction: column; /* スマホサイズで縦並び */
+        align-items: center;
+    }
+    .image-container img {
+        max-width: 100%; /* スマホサイズで親要素の幅に合わせる */
+    }
+}
+
+
+input[type="file"],
+select,
+input[type="number"] {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    width: calc(100% - 22px);
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+img {
+    max-width: 90%;
+    height: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    background-color: #fff
+}
+
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 0px;
+    padding: 0px;
+}
+
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 0px;
+    padding: 0px;
+}
+
+.form-inline {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: #ffffff;
+    padding: 5px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 5px;
+    flex-grow: 1;
+}
+
+.form-inline input,
+.form-inline select,
+.form-inline button {
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    flex-grow: 1;
+    padding: 10px;
+    margin-left: 10px;
+}
+/* 特定の数値入力要素の幅を他の要素の半分に設定 */
+.form-inline input[type="number"] {
+    flex-grow: 0;
+    flex-basis: 15%; /* 他の要素よりも小さくする */
+}
+/* ファイル選択の幅を調整 */
+.form-inline input[type="file"] {
+    flex-basis: 20%; /* 適切な割合に調整 */
+}
+/* セレクトボックスの幅を調整 */
+.form-inline select {
+    flex-basis: 15%; /* 数値入力と同じ幅に設定 */
+}
+/* ボタンの幅を調整 */
+.form-inline button {
+    flex-basis: 15%; /* 数値入力と同じ幅に設定 */
+}
+
+.input-group2 {
+    display: flex;
+    flex-direction: row; /* 要素を横並びに */
+    align-items: center; /* ラベルと入力フィールドの垂直位置を中央揃え */
+    justify-content: flex-start; /* 左寄せ */
+    margin-right: 0px; /* 各グループの間にスペースを追加 */
+}
+.input-group2 label {
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.input-group2 input[type="checkbox"] {
+    margin-right: 5px;
+    display: flex;
+    flex-basis: 10%;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.form-container3 {
+    display: flex;
+    justify-content: flex-end;
+    margin: auto;
+    margin-top: 0px;
+    padding: 0px;
+    align-items: flex-end;
+}
+
+.input-group3 {
+    display: flex;
+    justify-content: flex-end; /* アイテムをコンテナの右端に寄せる */
+    flex-wrap: wrap;      /* 必要に応じて次の行に折り返し */
+    width: 100%;  /* グループの横幅を最大に */
+    margin-bottom: 0px;  /* 下マージンを設定 */
+    margin-top: -3px;
+}
+.input-group3 label {
+    margin-right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    white-space: nowrap;  /* ラベルのテキストを改行させない */
+}
+
+.form-inline2, .form-inline3,.form-container4 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: #ffffff;
+    padding: 5px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 5px;
+    flex-grow: 1;
+}
+
+.form-container3 {
+    display: flex;
+    justify-content: flex-end;
+    margin: auto;
+    margin-top: 0px;
+    padding: 0px;
+    align-items: flex-end;
+}
+
+.form-container5 {
+    display: flex;
+    justify-content: flex-end;
+    margin: auto;
+    margin-top: 0px;
+    padding: 0px;
+    align-items: flex-end;
+}
+.input-group4 {
+    margin-top: 0px;
+    margin-left: 10px;
+    margin-right: 20px;
+    display: flex;
+    flex-basis: 50%;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.form-inline4 {
+    display: flex;
+    margin-top: 25px;
+    margin-left: 10px;
+    width: 25%;
+    margin-top: 0px;
+    justify-content: flex-end;
+}
+.form-inline4 label {
+    margin-top: 15px;
+    margin-right: 20px;   /* 各ラベルの右にマージンを設定 */
+    white-space: nowrap;  /* ラベルのテキストを改行させない */
+}
+.input-group4 label {
+    margin-right: 20px;   /* 各ラベルの右にマージンを設定 */
+    align-items: flex-end;
+}
+
+.input-group5 {
+    display: flex;
+    flex-direction: row; /* 要素を横並びに */
+    align-items: center; /* ラベルと入力フィールドの垂直位置を中央揃え */
+    justify-content: flex-end; /* 左寄せ */
+    margin-right: -10px; /* 各グループの間にスペースを追加 */
+    width: 30%;
+}
+.input-group5 input[type="range"] {
+    width: 50%;
+    margin-left: 5px;  /* スライダーと数値ボックスの間にマージンを設定 */
+}
+.input-group5 input[type="number"] {
+    width: 15%;  /* 数値表示ボックスの幅を設定 */
+}
+
+.input-group6 {
+    display: flex;        /* Flexboxを使ってアイテムを横に並べる */
+    margin-left: 20px;
+    align-items: center;  /* アイテムを中央揃えにする */
+    justify-content: flex-end; /* 左寄せ */
+    width: 40%;
+}
+.input-group6 label {
+    margin-right: 10px;   /* ラベルの右にマージンを設定 */
+    white-space: nowrap;  /* ラベルのテキストを改行させない */
+}
+.input-group6 input[type="range"] {
+    width: 50%;  /* スライダーの幅を設定 */
+    margin-right: 10px;  /* スライダーと数値ボックスの間にマージンを設定 */
+}
+.input-group6 input[type="number"] {
+    width: 15%;  /* 数値表示ボックスの幅を設定 */
+}
+.input-group7 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin: 0;
+    padding: 0;
+}
+.form-inline7 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: #ffffff;
+    padding: 5px;  /* これが足りていない場合が多い */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 5px;
+}
+label {
+    margin-bottom: 5px;
+}
+
+select, input[type="range"] {
+    width: 100%;
+}
+
+

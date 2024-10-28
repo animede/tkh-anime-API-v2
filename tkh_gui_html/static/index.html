@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <title>Image Processing App</title>
+    <link rel="stylesheet" href="static/styles.css?v=1.1">
+</head>
+<style>
+    .hidden {
+        display: none;
+    }
+    .drop-area {
+            width: 300px;
+            height: 200px;
+            border: 2px dashed #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .drop-area.hover {
+            border-color: #333;
+        }
+</style>
+
+<body>
+    <h1 style="margin-top:0px;margin-bottom:0px;margin-left:5px;">Scalable Talking-Head-Anime Application</h1>
+    <div class="image-container">
+        <div>
+            <h4 style="margin-top:0px;margin-bottom:0px;"">テンプレートイメージ</h4>
+            <img id="originalImage" src="" alt="テンプレートイメージ" class="drop-area">
+        </div>
+        <div>
+            <h4 style="margin-top:0px;">クロップイメージ</h4>
+            <img id="processedImage" src="" alt="クロップイメージ">
+        </div>
+    </div>
+
+    <div class="form-container">
+        <form id="fileForm" class="form-inline">
+            <input type="file" name="file" id="fileInput" accept="image/*"">
+        </form>
+        <form id="combinedForm" class="form-inline">
+            <div class="input-group form-inline">
+                <label for="modeSelect">Mode:</label>
+                <select id="modeSelect" name="mode" onchange="toggleCustomInputs()">
+                <option value="face">face</option>
+                    <option value="breastup">Breast Up</option>
+                    <option value="waistup">Waist Up</option>
+                    <option value="upperbody">Upperbody</option>
+                    <option value="fullbody">Fullbody</option>
+                    <option value="full">Fullbody-nup</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <div id="customInputs" style="display:none;">
+                    <div class=" form-inline">
+                        <h4>left</h2>
+                        <input type="number" name="left" placeholder="Left" value="155">
+                        <h4>top</h2>
+                        <input type="number" name="top" placeholder="Top" value="55">
+                        <h4>lWidth</h2>
+                        <input type="number" name="width" placeholder="Width" value="200">
+                        <h4>Height</h2>
+                        <input type="number" name="height" placeholder="Height" value="202">
+                    </div>
+                </div>
+            </div>
+            <div class="input-group form-inline" style="margin-right: 10px;">
+                <label for="scaleInput">Scale:</label>
+                <input type="number" name="scale" id="scaleInput" value="2" min="1" max="10">
+            </div>
+            <div class="input-group hidden" style="margin-right: 10px;">
+                <label for="fpsInput">FPS:</label>
+                <input type="number" name="fps" id="fpsInput" value="20" min="1" max="60">
+            </div>
+            <button type="button" onclick="generateImage()" class="hidden" id="generateImageButton">Generate Image</button>
+        </form>
+    </div>
+
+    <div class="form-container2 hidden">
+        <form id="expressionForm" class="form-inline2">
+            <!-- Eyebrow Type Dropdown -->
+            <div class="input-group2 form-inline">
+                <label for="eyebrowType">眉の形</label>
+                <select id="eyebrowType" name="eyebrowType" style="margin-left:-5px;margin-right:0px;">
+                    <option value="troubled">Troubled</option>
+                    <option value="angry">Angry</option>
+                    <option value="lowered">Lowered</option>
+                    <option value="raised">Raised</option>
+                    <option value="happy" selected>Happy</option>
+                    <option value="serious">Serious</option>
+                </select>
+            </div>
+            <!-- Eye Type Dropdown -->
+            <div class="input-group2 form-inline">
+                <label for="eyeType">目の形</label>
+                <select id="eyeType" name="eyeType" style="margin-left:-5px;margin-right:0px; width: 20%;align-items: flex-end;">
+                    <option value="wink" selected>Wink</option>
+                    <option value="happy_wink">Happy Wink</option>
+                    <option value="surprised">Surprised</option>
+                    <option value="relaxed">Relaxed</option>
+                    <option value="unimpressed">Unimpressed</option>
+                    <option value="raised_lower_eyelid">Raised Lower Eyelid</option>
+                </select>
+            </div>
+            <!-- Mouth Type Dropdown -->
+            <div class="input-group2 form-inline">
+                <label for="mouthType">口の形</label>
+                <select id="mouthType" name="mouthType" style="margin-left:-5px;margin-right:0px;width: 20%;align-items: flex-end;">
+                    <option value="aaa" selected>あ</option>
+                    <option value="iii">い</option>
+                    <option value="uuu">う</option>
+                    <option value="eee">え</option>
+                    <option value="ooo">お</option>
+                    <option value="delta">Delta</option>
+                    <option value="lowered_corner">Lowered Corner</option>
+                    <option value="raised_corner">Raised Corner</option>
+                    <option value="smirk">Smirk</option>
+                </select>
+            </div>
+            <!-- Adjustment Type Dropdown -->
+            <div class="input-group2 form-inline">
+                <label for="adjustmentType">部位選択</label>
+                <select id="adjustmentType" name="adjustmentType" style="margin-left:-5px;margin-right:0px; width: 50%;align-items: flex-end;">
+                    <option value="eye">目の開き</option>
+                    <option value="eyebrow">眉の変形</option>
+                    <option value="iris_small">瞳の大きさSmall</option>
+                    <option value="iris_rotation">瞳の回転</option>
+                    <option value="mouth">口の開き</option>
+                    <option value="head_x">頭前後</option>
+                    <option value="head_y">頭左右回転</option>
+                    <option value="neck">首の傾き</option>
+                    <option value="body_y">体の左右回転</option>
+                    <option value="body_z">体の傾き</option>
+                </select>
+            </div>
+                <div class="input-group2 form-inline">
+                    <label for="useOpenCV">リアルサイズ</label>
+                    <input type="checkbox" id="useOpenCV" name="useOpenCV_checkbox" onchange="toggleCheckboxValue()"  style="margin-left:-5px;margin-right:0px;">
+                    <input type="hidden" id="useOpenCV_value" name="useOpenCV" value="Off"  style="margin-left:-5px;margin-right:0px;">
+                </div>
+            <!-- Adjustment Value Slider -->
+            <div class="input-group5" style="margin-left:4px;margin-right:0px;">
+                    <label for="adjustmentValue" style="margin-left:5px;margin-right:0px;">動かす</label>
+                    <!-- スライダー -->
+                    <input type="range" id="adjustmentValue" name="adjustmentValue" min="-1" max="1" value="0" step="0.05" oninput="handleSliderChange(this.value)" style="margin-left:5px;margin-right:0px;">
+                    <!-- 数値ボックス -->
+                    <input type="number" id="adjustmentNumber" name="adjustmentNumber" min="-1" max="1" value="0" step="0.05" oninput="handleNumberChange(this.value)" style="margin-left:5px;margin-right:0px;">
+            </div>
+        </form>
+    </div>
+
+    <div class="form-container3 hidden">
+        <form  id="expressionIntensityForm" class="form-inline3" ">
+            <h4 style="justify-content: flex-start;white-space: nowrap;margin-top:0px;margin-bottom:0px;margin-left:5px;"">感情ポーズテスト</h4>
+            <!-- 感情のラジオボタン -->
+            <div class="input-group3">
+                <label><input type="radio" name="emotion" value="init" checked>初期化</label>
+                <label><input type="radio" name="emotion" value="happy">喜</label>
+                <label><input type="radio" name="emotion" value="angry">怒</label>
+                <label><input type="radio" name="emotion" value="sorrow">哀</label>
+                <label><input type="radio" name="emotion" value="relaxed">楽</label>
+                <label><input type="radio" name="emotion" value="smile">微笑</label>
+                <label><input type="radio" name="emotion" value="laugh">笑う</label>
+                <label><input type="radio" name="emotion" value="surprised">驚く</label>
+            </div>
+            <!-- スライダー -->
+            <div class="input-group6">
+                <label for="expressionIntensity">表情の強さ</label>
+                <input type="range" id="expressionIntensity" name="intensity" min="0" max="1" value="0.0" step="0.05" oninput="updateIntensityValue(); sendEmotions();"  style="margin-left:5px;margin-right:0px;">
+                <input type="number" id="intensityValue" value="0" step="0.05" style="margin-left:5px;margin-right:0px;"> <!-- 数値表示用 -->
+            </div>
+        </form>
+    </div>
+
+    <div class="form-container4 hidden">
+        <form  id="proseedTestForm" class="form-inline3" ">
+            <h4 style="justify-content: flex-start;white-space: nowrap;margin-top:0px;margin-bottom:0px;"">自動ポーズテスト</h4>
+            <div class="input-group3">
+                <label><input type="radio" name="pose" value="test1">連続ポーステスト１</label>
+                <label><input type="radio" name="pose" value="test2">連続ポーステスト２</label>
+                <label><input type="radio" name="pose" value="test3">連続ポーステスト３</label>
+            </div>
+        </form>
+
+        <form id="mocapForm" class="form-inline7">
+            <div class="input-group7" style="padding:0px;margin-left:5px;margin-right:5px;">
+                <h5 style="padding-top:0px;margin-top:0px;margin-bottom:0px;margin-left:5px;margin-right:5px;">モーションキャプチャ</h5>
+                <button type="button" id="mocapStartButton" style="margin-left:5px;margin-right:5px;">スタート</button>
+                <button type="button" id="mocapStopButton" style="margin-left:5px;margin-right:5px;">ストップ</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+    // グローバル変数を宣言
+    let globalImgNumber;
+    let useOpenCVValue = "Off";
+    // ボタンの要素を取得
+    const mocapStartButton = document.getElementById('mocapStartButton');
+    const mocapStopButton = document.getElementById('mocapStopButton');
+    // file upload
+    const dropArea = document.getElementById('originalImage');
+    const fileInput = document.getElementById('fileInput');
+    // WebSocket接続を作成
+    const ws = new WebSocket("ws://localhost:3001/ws/update-image/");
+        
+        // ページ読み込み時にスタートボタンを表示、ストップボタンを非表示
+        window.onload = function () {
+            mocapStartButton.style.display = 'inline';
+            mocapStopButton.style.display = 'none';
+        };
+
+        document.addEventListener('DOMContentLoaded', function () {
+            toggleCustomInputs();  // ページロード時にカスタム入力の表示状態を設定
+            function toggleCustomInputs() {
+                const selectBox = document.getElementById('modeSelect');
+                const customInputs = document.getElementById('customInputs');
+                customInputs.style.display = selectBox.value === 'custom' ? 'block' : 'none';
+            }
+            document.getElementById('originalImage').src = './static/default.png';
+            document.getElementById('processedImage').src = './static/default.png';
+            document.getElementById('modeSelect').addEventListener('change', toggleCustomInputs);
+            // ドラッグされたファイルがドロップエリアに入ったときのイベント
+            dropArea.addEventListener('dragover', (event) => {
+                event.preventDefault();
+                dropArea.classList.add('hover');
+            });
+            // ドラッグされたファイルがドロップエリアを離れたときのイベント
+            dropArea.addEventListener('dragleave', (event) => {
+                dropArea.classList.remove('hover');
+            });
+            // ドロップされたときのイベント
+            dropArea.addEventListener('drop', (event) => {
+                event.preventDefault();
+                dropArea.classList.remove('hover');
+
+                const files = event.dataTransfer.files;
+                if (files.length > 0) {
+                    handleFiles(files);
+                }
+            });
+            // ファイルが選択またはドロップされたときのイベント
+            function handleFiles(files) {
+                const file = files[0];
+                if (file) {
+                    // すぐにサーバーに送信
+                    processImage(file);
+                }
+            };
+            // ファイルが選択されたときのイベント
+            fileInput.addEventListener('change', (event) => {
+                const files = event.target.files;
+                if (files.length > 0) {
+                    handleFiles(files);
+                }
+            });
+        });
+        
+        // WebSocket接続を接続
+        ws.onopen = function() {
+                console.log("WebSocket is open now.");
+        };
+
+        // WebSocketから画像を受信したときのイベントハンドラ
+        ws.onmessage = function(event) {
+                if (event.data instanceof Blob) {
+                    const blob = event.data;
+                    const url = URL.createObjectURL(blob);
+                    document.getElementById('processedImage').src = url; // 画像を表示
+                }
+        };
+
+        // WebSocket接続が閉じられたときのイベントハンドラ
+        ws.onclose = function() {
+             console.log("WebSocket is closed now.");
+        }
+
+        function toggleCustomInputs() {
+            const selectBox = document.getElementById('modeSelect');
+            const customInputs = document.getElementById('customInputs');
+            customInputs.style.display = selectBox.value === 'custom' ? 'block' : 'none';
+        }
+
+        function processImage(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/process-image/', {method: 'POST', body: formData,})
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('originalImage').src = 'data:image/png;base64,' + data.processed;
+                globalImgNumber = data.img_number;// img_number をグローバル変数に保存
+                document.getElementById('generateImageButton').classList.remove('hidden');// `generateImage` ボタンを表示する
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function generateImage() {
+            const form = document.getElementById('combinedForm');
+            console.log(form );
+            const formData = new FormData(form);
+            // modeがcustomの場合、カスタム値を整数リストとして設定
+            if (document.getElementById('modeSelect').value === 'custom') {
+                const top = parseInt(form.querySelector('input[name="top"]').value, 10);
+                const left = parseInt(form.querySelector('input[name="left"]').value, 10);
+                const width = parseInt(form.querySelector('input[name="width"]').value, 10);
+                const height = parseInt(form.querySelector('input[name="height"]').value, 10);
+                formData.set('mode', JSON.stringify([top, left, width, height]));
+            }
+            console.log(formData );
+            fetch('/generate_image/', {method: 'POST', body: formData,})
+            .then(response => {
+                if (response.ok) {
+                    console.log("Image data Generation successfully.");
+                    document.querySelector('.form-container2').classList.remove('hidden');
+                    document.querySelector('.form-container3').classList.remove('hidden');
+                    document.querySelector('.form-container4').classList.remove('hidden');
+                } else {throw new Error('Failed to send adjustment data.');}
+            })
+             .catch(error => console.error('Error:', error));
+        }
+
+        function toggleCheckboxValue() {
+            var checkbox = document.getElementById('useOpenCV');
+            var hiddenInput = document.getElementById('useOpenCV_value');
+            useOpenCVValue = checkbox.checked ? "On" : "Off";
+            if (checkbox.checked) {
+                hiddenInput.value = "On";
+            } else {
+                hiddenInput.value = "Off";
+            }
+            console.log("useOpenCV value set to: " + hiddenInput.value); // 現在の値をコンソールに表示
+        }
+
+        // スライダーの変更を反映して通信する
+        function handleSliderChange(value) {
+            document.getElementById('adjustmentNumber').value = value;  // 数値ボックスを同期
+            updateAdjustment();  // updateAdjustment調整データを送信
+        }
+
+        // 数値ボックスの変更をスライダーに反映
+        function handleNumberChange(value) {
+            document.getElementById('adjustmentValue').value = value;  // スライダーを同期
+            updateAdjustment();  // updateAdjustment調整データを送信
+        }
+
+        // 調整データを送信
+        function updateAdjustment() {
+            /*
+            const adjustmentData = {
+                eyebrow_type: document.getElementById('eyebrowType').value,
+                eye_type: document.getElementById('eyeType').value,
+                mouth_type: document.getElementById('mouthType').value,
+                adjustment_type: document.getElementById('adjustmentType').value,
+                adjustment_value: parseFloat(document.getElementById('adjustmentValue').value),
+                scale: document.getElementById('scaleInput').value,
+                fps: document.getElementById('fpsInput').value,
+                useOpenCV: useOpenCVValue  // グローバル変数を参照
+            };
+            console.log(adjustmentData)
+            fetch('/update_adjustment/', { method: 'POST', headers: {'Content-Type': 'application/json', },
+                body: JSON.stringify(adjustmentData)
+            })
+            */
+            const formData = new FormData();
+            formData.append('eyebrow_type', document.getElementById('eyebrowType').value);
+            formData.append('eye_type', document.getElementById('eyeType').value);
+            formData.append('mouth_type', document.getElementById('mouthType').value);
+            formData.append('adjustment_type', document.getElementById('adjustmentType').value);
+            formData.append('adjustment_value', document.getElementById('adjustmentValue').value);  // FormDataは文字列として扱います
+            formData.append('scale', document.getElementById('scaleInput').value);
+            formData.append('fps', document.getElementById('fpsInput').value);
+            formData.append('useOpenCV2', useOpenCVValue);  // グローバル変数を参照
+            fetch('/update_adjustment/', {
+                method: 'POST', body: formData })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Adjustment data sent successfully.");
+                } else {throw new Error('Failed to send adjustment data.');}
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function updateIntensityValue() {
+            var slider = document.getElementById('expressionIntensity');
+            var output = document.getElementById('intensityValue');
+            output.value = slider.value; //sendEmotions スライダーの値を表示用のボックスに設定
+        }
+        
+        function sendEmotions() {
+            const emotionInput = document.querySelector('input[name="emotion"]:checked');// ラジオボタンから選択された感情を取得
+            const selectedEmotion = emotionInput ? emotionInput.value : '';  // 選択されていない場合は空文字を設定
+            const intensity = document.getElementById('expressionIntensity').value;// 表情の強さスライダーの値を追加
+            const mode = document.getElementById('modeSelect').value;
+            const scale = document.getElementById('scaleInput').value;
+            const fps = document.getElementById('fpsInput').value;
+            const formData = new FormData(document.getElementById('combinedForm'));
+            formData.append('emotions', selectedEmotion);// 感情データを文字列として追加
+            formData.append('mode', mode);
+            formData.append('scale', scale);
+            formData.append('fps', fps);
+            formData.append('intensity', intensity);
+            formData.append('useOpenCV2', useOpenCVValue);
+            fetch('/process-emotions/', {method: 'POST', body: formData })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Emotion data sent successfully.");
+                } else {throw new Error('Network response was not ok.');}
+               })
+            .catch(error => console.error('Error:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const radioButtons = document.querySelectorAll('input[name="pose"]');
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.checked) {
+                        const test = this.value;  // ラジオボタンの選択された値
+                        const mode = document.getElementById('modeSelect').value;
+                        const scale = document.getElementById('scaleInput').value;
+                        const fps = document.getElementById('fpsInput').value;
+                        const formData = new FormData();
+                        formData.append('test', test);  // 'test'という名前で選択された値を追加
+                        formData.append('mode', mode);
+                        formData.append('scale', scale);
+                        formData.append('fps', fps);
+                        formData.append('useOpenCV2', useOpenCVValue);
+                        console.log("formData:", formData); // コンソールにimg_numberを表示
+                        fetch('/auto-process/', {method: 'POST', body: formData})
+                        .then(response => response.json())
+                        .then(data => {console.log('Success:', data); })
+                        .catch(error => { console.error('Error:', error); });
+                    }
+                });
+            });
+        });
+        
+        document.querySelectorAll('input[name="emotion"]').forEach((checkbox) => {
+            checkbox.addEventListener('change', sendEmotions);
+        });
+
+        document.getElementById('fileInput').onchange = (event) => {
+            const [file] = event.target.files;
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.getElementById('originalImage').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        function toggleMocap(mode) {
+            // トグル処理（スタート・ストップのモードに応じてボタンを切り替え）
+            if (mode === 'start') {
+                mocapStartButton.style.display = 'none';
+                mocapStopButton.style.display = 'inline';
+            } else if (mode === 'stop') {
+                mocapStopButton.style.display = 'none';
+                mocapStartButton.style.display = 'inline';
+            }
+            const scale = document.getElementById('scaleInput').value;
+            const fps = document.getElementById('fpsInput').value;
+            const formData = new FormData(document.getElementById('combinedForm'));
+            formData.append('mode', mode);
+            formData.append('scale', scale);
+            formData.append('fps', fps);
+            formData.append('useOpenCV2', useOpenCVValue);
+
+            fetch('/mcap/', {method: 'POST',body: formData})
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error('Network response was not ok.');
+                }
+            })
+            .then(data => {
+                console.log('Success:', data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        };
+
+        // スタートボタンがクリックされたときの処理
+        mocapStartButton.addEventListener('click', function () {
+            toggleMocap('start');
+        });
+
+        // ストップボタンがクリックされたときの処理
+        mocapStopButton.addEventListener('click', function () {
+            toggleMocap('stop');
+        });
+
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,16 @@
+
+******************　mediapipサーバ起動コマンド**************
+source tkh/bin/activate
+cd tkh-anime-API-v2/mediapipe
+python sample_holistic_server.py
+
+******************　　　アプリ起動コマンド**************
+
+source tkh/bin/activate
+cd tkh-anime-API-v2/tkh_gui_html
+python tkh_gui_html_b.py
+
+
+
+
+

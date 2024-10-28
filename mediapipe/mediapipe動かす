@@ -1,0 +1,16 @@
+サーバを動かす
+
+source tkh/bin/activate
+cd tkh-anime-API-v2/mediapipe
+python sample_holistic_server.py
+
+
+ランドマーク	インデックス
+左目の外側	33
+左目の内側	133
+右目の外側	263
+右目の内側	362
+左目の上	159
+左目の下	145
+右目の上	386
+右目の下	374
