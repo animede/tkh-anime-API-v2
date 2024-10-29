@@ -94,6 +94,14 @@ python sample_holistic_server.py
 cd tkh_gui_html
 pyton tkh_gui_html_b.py
 
+関連URL　以下のリポジトリを参考に開発しています。
+https://github.com/pkhungurn/talking-head-anime-3-demo
+https://github.com/SkyTNT/anime-segmentation
+https://github.com/xinntao/Real-ESRGAN
+https://github.com/animede/anime_face_detection
+https://ai.google.dev/edge/mediapipe/solutions/guide?hl=ja
+http://cedro3.com/ai/mediapipe/
+https://github.com/cedro3/mediapipe
 
 
 
