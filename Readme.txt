@@ -1,4 +1,14 @@
-#以下でCUDA確認
+事前にCUDA-Toolkitをインストールしてください
+
+https://developer.nvidia.com/cuda-downloads
+環境を選ぶとインストールコマンドが表示されるのでそのままコピペします。networkインストールが楽だと思います
+
+パスを通しておきましょう（よく忘れます）
+export PATH=/usr/local/cuda:/usr/local/cuda/bin:$PATH
+export LD_LIBRARY_PATH=/usr/local/lib:/usr/local/cuda/lib64:$LD_LIBRARY_PATH
+source ~/.bashrc
+
+以下でCUDA確認
 nvcc -V　
 nvcc: NVIDIA (R) Cuda compiler driver
 Copyright (c) 2005-2023 NVIDIA Corporation
