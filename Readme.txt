@@ -101,6 +101,11 @@ source tkh/bin/activate             <<<<<<<< 11/4日修正　仮想環境をcond
 cd tkh-anime-API-v2/mediapipe/
 python sample_holistic_server.py
 
+起動時にカメラ画角に顔が無い場合にもエラーにならないバージョンを追加　　　　　　　　　　　<<<<<<<< 11/4日追加
+ただし、以下のアプリサーバtkh_gui_html_b.pyでモーションキャプチャをスタートする以前に　<<<<<<<< 11/4日追加
+画角に顔が無いと、tkh_gui_html_b.pyでエラーになります。　　　　　　　　　　　　　　　　<<<<<<<< 11/4日追加
+python sample_holistic_server_b.py　　　　　　　　　　　　　　　               　<<<<<<<< 11/4日追加
+
 >>>>>>>>> アプリサーバ起動
 新規ターミナルを開く
 source tkh/bin/activate             <<<<<<<< 11/4日修正　仮想環境起動を追加
