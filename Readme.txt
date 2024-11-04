@@ -96,12 +96,14 @@ python poser_image_2_template_class_test.py
 
 **********************モーションキャプチャWebアプリ
 >>>>>>>>> mediapipサーバ起動
-source tkh/bin/activate
+新規ターミナルを開く
+source tkh/bin/activate             <<<<<<<< 11/4日修正　仮想環境をcondaからvenvへ変更
 cd tkh-anime-API-v2/mediapipe/
 python sample_holistic_server.py
 
 >>>>>>>>> アプリサーバ起動
-source tkh/bin/activate             <<<<<<<< 11/4日修正　仮想環境をcondaからvenvへ変更
+新規ターミナルを開く
+source tkh/bin/activate             <<<<<<<< 11/4日修正　仮想環境起動を追加
 cd tkh-anime-API-v2/tkh_gui_html    <<<<<<<< 11/4日修正　パス修正
 python tkh_gui_html_b.py            <<<<<<<< 11/4日修正 pythonのタイポ
 
