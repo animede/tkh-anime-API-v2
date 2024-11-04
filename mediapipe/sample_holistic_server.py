@@ -221,7 +221,7 @@ def get_mocap(cvFpsCalc,holistic,cap,segmentation_score_th,enable_segmentation):
                     # 顔の対角線の長さの計算（3D）　これを使う
                     face_diagonal_3d = np.sqrt(face_width_3d**2 + face_height_3d**2)
                
-                print("#######face_diagonal_3d=",face_diagonal_3d)
+                # print("#######face_diagonal_3d=",face_diagonal_3d)
                 # 3D顔のランドマークモデル
                 # 単位は任意、顔の各ポイントの3D座標 (X, Y, Z)を定義します。
                 face_3d_model_points = np.array([
