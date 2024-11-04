@@ -112,6 +112,9 @@ source tkh/bin/activate             <<<<<<<< 11/4日修正　仮想環境起動�
 cd tkh-anime-API-v2/tkh_gui_html    <<<<<<<< 11/4日修正　パス修正
 python tkh_gui_html_b.py            <<<<<<<< 11/4日修正 pythonのタイポ
 
+起動時にカメラ画角に顔が無い場合にもエラーにならないバージョンを追加　　　<<<<<<<< 11/4日追加
+python tkh_gui_html_c.py                                      <<<<<<<< 11/4日追加
+
 関連URL　以下のリポジトリを参考に開発しています。
 https://github.com/pkhungurn/talking-head-anime-3-demo
 https://github.com/SkyTNT/anime-segmentation
