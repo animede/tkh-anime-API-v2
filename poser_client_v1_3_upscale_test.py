@@ -7,7 +7,7 @@ from time import sleep
 import time
 from poser_client_v1_3_class import TalkingHeadAnimefaceInterface
 
-from tkh_up_scale import upscale
+from tkh_up_scale_b import upscale
 #PIL形式の画像を動画として表示
 def image_show(imge):
     imge = np.array(imge)
