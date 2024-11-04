@@ -55,7 +55,7 @@ isnetis.ckptはtkh-anime-API-v2のルート（このファイルがあるディ�
 ***************Talking-Head-Animeface-3   host:127.0.0.1 port:8001
 source tkh/bin/activate
 cd tkh-anime-API-v2
-python poser_api_v1_3S_server.py
+python poser_api_v1_3S_server.py       <<<<<<<< 11/4日修正
 
 **********************テスト
 >>>>>>>>> ベース Talking-head
@@ -101,8 +101,8 @@ cd tkh-anime-API-v2/mediapipe/
 python sample_holistic_server.py
 
 >>>>>>>>> アプリサーバ起動
-source tkh/bin/activate
-cd tkh_gui_html/tkh_gui_html
+source tkh/bin/activate             <<<<<<<< 11/4日修正
+cd tkh-anime-API-v2/tkh_gui_html    <<<<<<<< 11/4日修正
 python tkh_gui_html_b.py
 
 関連URL　以下のリポジトリを参考に開発しています。
